@@ -1,5 +1,7 @@
 import random
 import Planet
+import Missile
+import Spaceship
 import sys
 import pygame
 
@@ -8,15 +10,15 @@ class GameSpace(object):
 		MIN_PLANETS = 1
 		MAX_PLANETS = 7
 		pygame.init()
-		self.size = self.width, self.height = 640, 420
+		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
 		num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
 		self.planets = []
 		for planet in range(num_planets):
 			self.planets.append(Planet.Planet(self))
 		self.missle = None
-		#self.ship1 = 
-		#self.ship2 = 
+		self.ship1 = Spaceship.Spaceship(self, 90, .0, .5)
+		self.ship2 = Spaceship.Spaceship(self, 90, .88, .5)
 		self.black = 0, 0, 0
 	
 	def main(self):
@@ -30,11 +32,16 @@ class GameSpace(object):
 
 			self.screen.fill(self.black)
 			
-			#Do tick for all planet objects
+			#Do ticks for all sprite objects
 			for planet in self.planets:	
-				planet.tick()
+			    planet.tick()
 
-			# Step 7 #
+                        if self.missle:
+                            self.missle.tick()
+                        else:
+                            self.ship1.tick()
+                            self.ship2.tick()
+
 			pygame.display.flip()
 
 if __name__ == '__main__':

@@ -15,10 +15,10 @@ class Planet(pygame.sprite.Sprite):
 		self.placePlanet()		
 
 	def placePlanet(self):
-		MIN_X = self.gs.width * .15
-		MAX_X = self.gs.width * .85
-		MIN_Y = self.gs.height * .15
-		MAX_Y = self.gs.height * .85
+		MIN_X = int(self.gs.width * .18)
+		MAX_X = int(self.gs.width * .82)
+		MIN_Y = int(self.gs.height * .18)
+		MAX_Y = int(self.gs.height * .82)
 
 		num_placement_attempts = 0
 		successful_placement = False
@@ -36,8 +36,8 @@ class Planet(pygame.sprite.Sprite):
 
 			#Do some sanity checking to make sure we are sucessfully placing planets after a reasonable number of attempts
 			num_placement_attempts += 1
-			if num_placement_attempts > 100:
-				raise RuntimeError('Unable to place planet after looking at 100 points on the screen')
+			if num_placement_attempts > 200:
+				raise RuntimeError('Unable to place planet after looking at 200 points on the screen')
 
 	def tick(self):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)

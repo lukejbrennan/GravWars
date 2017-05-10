@@ -20,23 +20,23 @@ class Missle(pygame.sprite.Sprite):
                 self.true_y = rect.centery
 
 	def tick(self):
-            G = 1e4
-            dt = float(1)/float(60)
+	    G = 1e4
+	    dt = float(1)/float(60)
             x_components = []
             y_components = []
             curr_x = self.rect.centerx
             curr_y = self.rect.centery
             for planet in self.gs.planets:
-                #Force on missile from planet
-                planet_x = planet.rect.centerx
-                planet_y = planet.rect.centery
-                r = math.sqrt((planet_x - curr_x)**2 + (planet_y - curr_y)**2)
-                F = float(G) * float(self.mass) * float(planet.mass) / float(r)**2
+                    #Force on missile from planet
+                    planet_x = planet.rect.centerx
+                    planet_y = planet.rect.centery
+                    r = math.sqrt((planet_x - curr_x)**2 + (planet_y - curr_y)**2)
+                    F = float(G) * float(self.mass) * float(planet.mass) / float(r)**2
 
-                #Calculate angle between planet and missile and decompose force vector
-	        angle = math.atan2(planet_y - curr_y, planet_x - curr_x)
-                x_components.append(math.cos(angle) * F)
-                y_components.append(math.sin(angle) * F)
+                    #Calculate angle between planet and missile and decompose force vector
+                    angle = math.atan2(planet_y - curr_y, planet_x - curr_x)
+                    x_components.append(math.cos(angle) * F)
+                    y_components.append(math.sin(angle) * F)
 
             # Sum components and calculate a new force vector and accelerations
             Fx_tot = sum(x_components)
@@ -51,7 +51,7 @@ class Missle(pygame.sprite.Sprite):
             self.Vx = self.Vx + ax * dt
             self.Vy = self.Vy + ay * dt
             self.angle = math.atan2(self.Vy, self.Vx)
-	    
+    
             # Now move the missile
             self.true_x += dx
             self.true_y += dy

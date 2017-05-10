@@ -13,7 +13,7 @@ class Spaceship(pygame.sprite.Sprite):
 		
 #		self.OG_image = pygame.image.load("spaceship.png").convert()
 		self.image = pygame.transform.rotate(self.image, self.angle)
-		self.image = pygame.transform.scale(self.image, (100, 100))
+		self.image = pygame.transform.scale(self.image, (80, 80))
 		self.OG_image = self.image
 		self.rect = self.image.get_rect().move(xper*self.gs.width, yper*self.gs.height)
 		#Get rectangle and set placement

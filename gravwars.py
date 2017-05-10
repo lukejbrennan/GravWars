@@ -8,8 +8,8 @@ import math
 
 class GameSpace(object):
 	def __init__(self):
-		MIN_PLANETS = 0
-		MAX_PLANETS = 0
+		MIN_PLANETS = 2
+		MAX_PLANETS = 6
 		pygame.init()
 		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
@@ -23,7 +23,7 @@ class GameSpace(object):
 		#### (self, rot, xpos, ypos, activeMover, activeCollider
 		self.player_ship = Spaceship.Spaceship(self, 90, .0, .5, active, notActive)
 		self.opponent_ship = Spaceship.Spaceship(self, 90, .88, .5, notActive, active)
-		self.black = 0, 0, 0
+		self.black = 0,0,0
 	
 	def main(self):
 		self.clock = pygame.time.Clock()
@@ -39,17 +39,16 @@ class GameSpace(object):
                                     ship_y = self.opponent_ship.rect.centery
 	    		            angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
                                     self.missile = Missile.Missle(self, angle, self.player_ship.rect)
-
 			self.screen.fill(self.black)
 			
 			#Do ticks for all sprite objects
 			for planet in self.planets:	
 			    planet.tick()
 
+                        self.player_ship.tick()
                         if self.missile:
                             self.missile.tick()
                         
-                        self.player_ship.tick()
                         self.opponent_ship.tick()
 
 			pygame.display.flip()

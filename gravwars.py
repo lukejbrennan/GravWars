@@ -16,9 +16,9 @@ class GameSpace(object):
 		self.planets = []
 		for planet in range(num_planets):
 			self.planets.append(Planet.Planet(self))
-		self.missle = None
-		self.ship1 = Spaceship.Spaceship(self, 90, .0, .5)
-		self.ship2 = Spaceship.Spaceship(self, 90, .88, .5)
+		self.missile = None
+		self.player_ship = Spaceship.Spaceship(self, 90, .0, .5)
+		self.opponent_ship = Spaceship.Spaceship(self, 90, .88, .5)
 		self.black = 0, 0, 0
 	
 	def main(self):
@@ -29,6 +29,8 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					sys.exit()
+                                if event.type == pygame.MOUSEBUTTONUP:
+                                    self.missile = Missile.Missle(self, 0, self.ship1.rect)
 
 			self.screen.fill(self.black)
 			
@@ -36,11 +38,11 @@ class GameSpace(object):
 			for planet in self.planets:	
 			    planet.tick()
 
-                        if self.missle:
-                            self.missle.tick()
+                        if self.missile:
+                            self.missile.tick()
                         else:
-                            self.ship1.tick()
-                            self.ship2.tick()
+                            self.player_ship.tick()
+                            self.opponent_ship.tick()
 
 			pygame.display.flip()
 

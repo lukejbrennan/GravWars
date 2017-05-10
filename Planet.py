@@ -4,8 +4,8 @@ import random
 
 class Planet(pygame.sprite.Sprite):
 	def __init__(self, gs):
-		MIN_RADIUS = gs.height * .05
-		MAX_RADIUS = gs.height * .2 
+		MIN_RADIUS = int(gs.height * .05)
+		MAX_RADIUS = int(gs.height * .12)
 		MIN_MASS = 100
 		MAX_MASS = 1000
 		self.gs = gs
@@ -15,8 +15,8 @@ class Planet(pygame.sprite.Sprite):
 		self.placePlanet()		
 
 	def placePlanet(self):
-		MIN_X = int(self.gs.width * .18)
-		MAX_X = int(self.gs.width * .82)
+		MIN_X = int(self.gs.width * .23)
+		MAX_X = int(self.gs.width * .78)
 		MIN_Y = int(self.gs.height * .18)
 		MAX_Y = int(self.gs.height * .82)
 
@@ -43,7 +43,7 @@ class Planet(pygame.sprite.Sprite):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
 		if self.gs.missle:
-			if self.rect.colliderect(self.gs.missle.rect):
+			if self.rect.colliderect(self.gs.missle.image.get_rect()):
 				self.gs.missle.rect = None
 			
 

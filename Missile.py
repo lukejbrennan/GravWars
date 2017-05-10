@@ -11,12 +11,11 @@ class Missle(pygame.sprite.Sprite):
                 self.Vy = 100 * math.sin(angle)
 		print('vx is ' + str(self.Vx) + ' and vy is ' + str(self.Vy))
                 self.angle = angle 
-		self.image = pygame.image.load("/home/brent/GravWars/missile.png").convert()
+		self.image = pygame.image.load("/home/remote/lbrenna4/finalProject/GravWars/missile.png").convert()
 		self.image = pygame.transform.rotate(self.image, -90)
 		self.image = pygame.transform.scale(self.image, (100, 100))
 		self.OG_image = self.image
                 self.rect = self.image.get_rect(center=(rect.centerx, rect.centery))
-
 	def tick(self):
 		G = 1e4
 		dt = float(1)/float(60)
@@ -48,7 +47,7 @@ class Missle(pygame.sprite.Sprite):
 		self.angle = math.atan2(self.Vy, self.Vx)
 	    
             # Now move the missile
-	    self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
-	    self.rect = self.rect.move(dx, dy)
-	    self.gs.screen.blit(self.image, self.rect)
+		self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
+		self.rect = self.rect.move(dx, dy)
+		self.gs.screen.blit(self.image, self.rect)
 					

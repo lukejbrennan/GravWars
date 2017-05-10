@@ -10,7 +10,6 @@ class Spaceship(pygame.sprite.Sprite):
 		self.health = 10
 		self.expCount = 0
 		self.image = pygame.image.load("spaceship.png").convert()
-		
 #		self.OG_image = pygame.image.load("spaceship.png").convert()
 		self.image = pygame.transform.rotate(self.image, self.angle)
 		self.image = pygame.transform.scale(self.image, (100, 100))

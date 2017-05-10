@@ -16,9 +16,12 @@ class GameSpace(object):
 		self.planets = []
 		for planet in range(num_planets):
 			self.planets.append(Planet.Planet(self))
-		self.missile = None
-		self.player_ship = Spaceship.Spaceship(self, 90, .0, .5)
-		self.opponent_ship = Spaceship.Spaceship(self, 90, .88, .5)
+		self.missle = None
+		active = 1
+		notActive = 0
+		#### (self, rot, xpos, ypos, activeMover, activeCollider
+		self.player_ship = Spaceship.Spaceship(self, 90, .0, .5, active, notActive)
+		self.opponent_ship = Spaceship.Spaceship(self, 90, .88, .5, notActive, active)
 		self.black = 0, 0, 0
 	
 	def main(self):

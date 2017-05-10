@@ -4,11 +4,12 @@ import Missile
 import Spaceship
 import sys
 import pygame
+import math
 
 class GameSpace(object):
 	def __init__(self):
-		MIN_PLANETS = 1
-		MAX_PLANETS = 7
+		MIN_PLANETS = 0
+		MAX_PLANETS = 0
 		pygame.init()
 		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
@@ -16,12 +17,12 @@ class GameSpace(object):
 		self.planets = []
 		for planet in range(num_planets):
 			self.planets.append(Planet.Planet(self))
-		self.missle = None
+		self.missile = None
 		active = 1
 		notActive = 0
 		#### (self, rot, xpos, ypos, activeMover, activeCollider
-		self.ship1 = Spaceship.Spaceship(self, 90, .0, .5, active, notActive)
-		self.ship2 = Spaceship.Spaceship(self, 90, .88, .5, notActive, active)
+		self.player_ship = Spaceship.Spaceship(self, 90, .0, .5, active, notActive)
+		self.opponent_ship = Spaceship.Spaceship(self, 90, .88, .5, notActive, active)
 		self.black = 0, 0, 0
 	
 	def main(self):
@@ -32,6 +33,12 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					sys.exit()
+                                if event.type == pygame.MOUSEBUTTONUP:
+                		    (mouseX, mouseY) = pygame.mouse.get_pos()
+                                    ship_x = self.player_ship.rect.centerx
+                                    ship_y = self.opponent_ship.rect.centery
+	    		            angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
+                                    self.missile = Missile.Missle(self, angle, self.player_ship.rect)
 
 			self.screen.fill(self.black)
 			
@@ -39,11 +46,11 @@ class GameSpace(object):
 			for planet in self.planets:	
 			    planet.tick()
 
-                        if self.missle:
-                            self.missle.tick()
-                        else:
-                            self.ship1.tick()
-                            self.ship2.tick()
+                        if self.missile:
+                            self.missile.tick()
+                        
+                        self.player_ship.tick()
+                        self.opponent_ship.tick()
 
 			pygame.display.flip()
 

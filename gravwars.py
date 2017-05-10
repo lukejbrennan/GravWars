@@ -4,11 +4,12 @@ import Missile
 import Spaceship
 import sys
 import pygame
+import math
 
 class GameSpace(object):
 	def __init__(self):
-		MIN_PLANETS = 1
-		MAX_PLANETS = 7
+		MIN_PLANETS = 0
+		MAX_PLANETS = 0
 		pygame.init()
 		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
@@ -16,7 +17,7 @@ class GameSpace(object):
 		self.planets = []
 		for planet in range(num_planets):
 			self.planets.append(Planet.Planet(self))
-		self.missle = None
+		self.missile = None
 		active = 1
 		notActive = 0
 		#### (self, rot, xpos, ypos, activeMover, activeCollider
@@ -33,7 +34,11 @@ class GameSpace(object):
 				if event.type == pygame.QUIT:
 					sys.exit()
                                 if event.type == pygame.MOUSEBUTTONUP:
-                                    self.missile = Missile.Missle(self, 0, self.ship1.rect)
+                		    (mouseX, mouseY) = pygame.mouse.get_pos()
+                                    ship_x = self.player_ship.rect.centerx
+                                    ship_y = self.opponent_ship.rect.centery
+	    		            angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
+                                    self.missile = Missile.Missle(self, angle, self.player_ship.rect)
 
 			self.screen.fill(self.black)
 			
@@ -43,9 +48,9 @@ class GameSpace(object):
 
                         if self.missile:
                             self.missile.tick()
-                        else:
-                            self.player_ship.tick()
-                            self.opponent_ship.tick()
+                        
+                        self.player_ship.tick()
+                        self.opponent_ship.tick()
 
 			pygame.display.flip()
 

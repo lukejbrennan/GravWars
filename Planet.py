@@ -42,9 +42,9 @@ class Planet(pygame.sprite.Sprite):
 	def tick(self):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
-		if self.gs.missle:
-			if self.rect.colliderect(self.gs.missle.image.get_rect()):
-				self.gs.missle.rect = None
+		if self.gs.missile:
+			if self.rect.colliderect(self.gs.missile.image.get_rect()):
+				self.gs.missile.rect = None
 			
 
 	def randColor(self):

@@ -1,9 +1,10 @@
 import sys
 import pygame
 import random
+import pickle
 
 class Planet(pygame.sprite.Sprite):
-	def __init__(self, gs):
+	def __init__(self, gs, place):
 		MIN_RADIUS = int(gs.height * .05)
 		MAX_RADIUS = int(gs.height * .12)
 		MIN_MASS = 100
@@ -12,7 +13,8 @@ class Planet(pygame.sprite.Sprite):
 		self.color = self.randColor()
 		self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
 		self.mass = random.randint(MIN_MASS, MAX_MASS)
-		self.placePlanet()		
+                if place:
+		    self.placePlanet()		
 
 	def placePlanet(self):
 		MIN_X = int(self.gs.width * .23)
@@ -43,10 +45,10 @@ class Planet(pygame.sprite.Sprite):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
 		if self.gs.missile:
-#			if self.rect.colliderect(self.gs.missile.image.get_rect()):
-#				self.gs.missile.rect = None
 			if self.rect.colliderect(self.gs.missile.rect):			
 				self.gs.missile = None
+				if self.gs.is_your_turn:
+					self.conn_ref.transport.write('planet_collision')
 			
 
 	def randColor(self):

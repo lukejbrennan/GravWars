@@ -38,5 +38,39 @@ class p2Factory(ClientFactory):
     def buildProtocol(self, addr):
         return self.myconn
 
-reactor.connectTCP("ash.campus.nd.edu", 40011, p2Factory(2))
-reactor.run()
+###########################################
+# P2 Client Connection
+###########################################
+
+class P2Connection(Protocol):
+    def __init__(self, gs):
+        self.gs = gs
+
+    def connnectionMade(self):
+        print('conn_made')
+        gs.getConnRef(self)
+        gs.main('p2')
+
+    def dataReceived(self, data):
+        if data == 'spaceship_collision':
+            #end game
+            return
+        elif data == 'planet_collision':
+            self.gs.is_your_turn = not self.gs.is_you_turn
+        else:
+            data = data.split('\n')
+            self.gs.planets.append(pickle.loads(data[1]))
+
+class p2Factory(ClientFactory):
+    def __init__(self, gs):
+        self.myconn = P2Connection(gs)
+
+    def buildProtocol(self, addr):
+        return self.myconn
+
+
+
+if __name__ == '__main__':
+    reactor.connectTCP("ash.campus.nd.edu", COMMAND_PORT, p2Factory(2))
+    reactor.run()
+>>>>>>> e2f46ed6c77b324ce5fcefa6901538b6478ea226

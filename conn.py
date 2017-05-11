@@ -1,25 +1,21 @@
-#!/usr/bin/python
 from twisted.internet.protocol import Factory
+from twisted.internet.protocol import ClientFactory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor
 import time
-import connections
-COMMAND_PORT = 40011
-DATA_PORT = 42011
-CLIENT_PORT = 43011
 
-###########################################
-# P1 Server Connection
-###########################################
+###################################
+# p2 client Connection
+###################################
 
-class P1Connection(Protocol):
+class p2Connection(Protocol):
     def __init__(self, gs):
-        self.gs = gs
+            self.gs = gs
 
-    def connnectionMade(self):
-        print "conn made"
-        gs.getConnRef(self)
-        gs.main('p1')
+    def connectionMade(self):
+        print 'Successful contact for command connection from work.py'
+        #gs.getConnRef(self)
+        #gs.main('p1')
 
     def dataReceived(self, data):
         if data == 'spaceship_collision':
@@ -28,17 +24,45 @@ class P1Connection(Protocol):
         elif data == 'planet_collision':
             self.gs.is_your_turn = not self.gs.is_you_turn
         else:
-            print "Error: Unknown data"
+            print('Error: Unknown data')
 
-class p1Factory(Factory):
+
+
+class p2ConnectionFactory(ClientFactory):
     def __init__(self, gs):
-		self.myconn = P1Connection(gs)
-		print "connection factory initialized"
+        self.myconn = p1Connection(gs)
 
     def buildProtocol(self, addr):
         return self.myconn
 
-#Listen for command connection
-print 'listening for a command connection on port 40011'
-reactor.listenTCP(40011, p1Factory(2))
-reactor.run()
+
+###################################
+# p1 server Connection
+###################################
+
+class p1Connection(Protocol):
+    def __init__(self, gs):
+            self.gs = gs
+
+    def connectionMade(self):
+        print 'Successful contact for command connection from work.py'
+        #gs.getConnRef(self)
+        #gs.main('p1')
+
+
+    def dataReceived(self, data):
+        if data == 'spaceship_collision':
+            #end game
+            return
+        elif data == 'planet_collision':
+            self.gs.is_your_turn = not self.gs.is_you_turn
+        else:
+            print('Error: Unknown data')
+
+class p1ConnectionFactory(Factory):
+    def __init__(self, gs):
+        self.myconn = p1Connection(gs)
+
+    def buildProtocol(self, addr):
+        return self.myconn
+

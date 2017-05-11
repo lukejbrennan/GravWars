@@ -18,7 +18,7 @@ class GameSpace(object):
 		pygame.init()
 		self.angle = 0
 		self.velocity = 100
-		self.size = self.width, self.height = 340, 320
+		self.size = self.width, self.height = 840, 620 # 320, 320
 		self.screen = pygame.display.set_mode(self.size)
 		num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
 		self.planets = []

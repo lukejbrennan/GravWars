@@ -91,5 +91,9 @@ class GameSpace(object):
 
                         if self.missile:
                             self.missile.tick()
+				#Check if missile has gone off the page
+				if self.missile:
+					if self.missile.true_x < 0 or self.missile.true_x > self.width or self.missile.true_y < 0 or self.missile.true_y > self.height:
+						self.missile = None
                         
 			pygame.display.flip()

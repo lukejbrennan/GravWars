@@ -11,8 +11,9 @@ import Planet
 
 class p2Connection(Protocol):
     def __init__(self, gs):
-            self.gs = gs
-
+        self.gs = gs
+        self.gs.getRef(self)
+    
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
         self.gs.getConnRef(self)
@@ -46,8 +47,6 @@ class p2Connection(Protocol):
 				print('Error: Unknown data')
 
 
-
-
 class p2ConnectionFactory(ClientFactory):
     def __init__(self, gs):
         self.myconn = p2Connection(gs)
@@ -63,6 +62,7 @@ class p2ConnectionFactory(ClientFactory):
 class p1Connection(Protocol):
     def __init__(self, gs):
             self.gs = gs
+            self.gs.getRef(self)
 
     def connectionMade(self):
 		print 'Successful contact for command connection from work.py'
@@ -70,8 +70,8 @@ class p1Connection(Protocol):
 		self.gs.setPlanets()
 		self.gs.connection_made = True
 
-
     def dataReceived(self, data):
+        print data
         if data == 'spaceship_collision':
             #end game
             return

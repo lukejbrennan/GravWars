@@ -11,7 +11,7 @@ class Missle(pygame.sprite.Sprite):
 		self.Vy = 300 * math.sin(angle)
 		print('vx is ' + str(self.Vx) + ' and vy is ' + str(self.Vy))
 		self.angle = angle 
-		self.image = pygame.image.load("/home/remote/lbrenna4/finalProject/GravWars/missile.png").convert()
+		self.image = pygame.image.load("/home/brent/GravWars/missile.png").convert()
 		self.image = pygame.transform.scale(self.image, (62, 27))
 		self.OG_image = self.image
 		#print('center = ' +str(rect.centerx))

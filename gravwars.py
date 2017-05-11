@@ -1,5 +1,3 @@
-# Home server to get connections from client and and work
-
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor
@@ -14,6 +12,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
             print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
             exit(0)        
+    
     gs = GameSpace.GameSpace()
     if sys.argv[1] == '-p1':
 		print 'listening for a command connection on port 40011'

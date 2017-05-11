@@ -5,7 +5,6 @@ import Spaceship
 import sys
 import pygame
 import math
-import pickle
 import connections
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
@@ -14,24 +13,27 @@ from twisted.internet import reactor
 
 class GameSpace(object):
 	def __init__(self):
-		MIN_PLANETS = 2
-		MAX_PLANETS = 6
-		pygame.init()
-		self.angle = 0
-		self.velocity = 100
-		self.size = self.width, self.height = 840, 620
-		self.screen = pygame.display.set_mode(self.size)
-		self.num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
-		self.planets = []
-		self.missile = None
-		self.p1 = Spaceship.Spaceship(self, 90, .0, .5, True, True)
-		self.p2 = Spaceship.Spaceship(self, 90, .88, .5, True, True)
-		self.black = 0,0,0
-                self.is_your_turn = None
-                self.conn_ref = None
+            MIN_PLANETS = 2
+            MAX_PLANETS = 6
+            pygame.init()
+            self.angle = 0
+            self.velocity = 100
+            self.size = self.width, self.height = 840, 620
+            self.screen = pygame.display.set_mode(self.size)
+            self.num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
+            self.planets = []
+            self.missile = None
+            self.p1 = Spaceship.Spaceship(self, 90, .0, .5, True, True)
+            self.p2 = Spaceship.Spaceship(self, 90, .88, .5, True, True)
+            self.black = 0,0,0
+            self.is_your_turn = None
+            self.conn_ref = None
         
         def getConnRef(self, conn_ref):
             self.conn_ref = conn_ref
+        
+        def sendPlanet(self, planet):
+            
 
 	def main(self, player):
 		self.clock = pygame.time.Clock()
@@ -39,7 +41,7 @@ class GameSpace(object):
                     self.is_your_turn = True
         	    for planet in range(self.num_planets):
 			self.planets.append(Planet.Planet(self, True))
-                        self.conn_ref.transport.write('planet\n' + pickle.dumps(self.planets[planet]))
+                        self.sendPlanet(self.planets[planet])
 
                 elif player == 'p2':
                     self.is_your_turn = False

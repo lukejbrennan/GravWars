@@ -4,14 +4,20 @@ import random
 import pickle
 
 class Planet(pygame.sprite.Sprite):
-	def __init__(self, gs, place):
+	def __init__(self, gs, place, color=None, radius=None, mass=None, x=None, y=None):
 		MIN_RADIUS = int(gs.height * .05)
 		MAX_RADIUS = int(gs.height * .12)
 		MIN_MASS = 100
 		MAX_MASS = 1000
 		self.gs = gs
-		self.color = self.randColor()
-		self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
+                if color:
+                    self.color = color
+                else:
+		    self.color = self.randColor()
+                if radius:
+                    self.radius = radius
+
+                self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
 		self.mass = random.randint(MIN_MASS, MAX_MASS)
                 if place:
 		    self.placePlanet()		

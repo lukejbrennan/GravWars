@@ -8,7 +8,7 @@ import time
 import GameSpace
 import conn
 import sys
-PORT = 40037
+PORT = 40011
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -16,13 +16,19 @@ if __name__ == "__main__":
             exit(0)        
     gs = GameSpace.GameSpace()
     if sys.argv[1] == '-p1':
-        print 'listening for a command connection on port 40037'
-        reactor.listenTCP(PORT, conn.p1ConnectionFactory(gs))
-        reactor.run()
+		print 'listening for a command connection on port 40011'
+		reactor.listenTCP(PORT, conn.p1ConnectionFactory(gs))
+		#print("After listen")
+		#reactor.run()
+		#print("after reactor")
+		gs.main('p1')
     elif sys.argv[1] == '-p2':
-        reactor.connectTCP("localhost", PORT, conn.p2ConnectionFactory(gs))
-        reactor.run()
+		reactor.connectTCP("ash.campus.nd.edu", PORT, conn.p2ConnectionFactory(gs))
+		#print("After connect")
+		#reactor.run()
+		#print("after reactor")
+		gs.main('p2')
     else:
-        print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
-        exit(0)
+		print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
+		exit(0)
 

@@ -14,7 +14,7 @@ class Missle(pygame.sprite.Sprite):
 		self.image = pygame.image.load("/home/remote/lbrenna4/finalProject/GravWars/missile.png").convert()
 		self.image = pygame.transform.scale(self.image, (62, 27))
 		self.OG_image = self.image
-		print('center = ' +str(rect.centerx))
+		#print('center = ' +str(rect.centerx))
 		self.rect = self.image.get_rect(center=(rect.centerx, rect.centery))
 		self.true_x = rect.centerx
 		self.true_y = rect.centery

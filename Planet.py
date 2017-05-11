@@ -10,26 +10,28 @@ class Planet(pygame.sprite.Sprite):
 		MIN_MASS = 100
 		MAX_MASS = 1000
 		self.gs = gs
-                if color:
-                    self.color = color
-                else:
-		    self.color = self.randColor()
-                if radius:
-                    self.radius = radius
-                else:
-                    self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
-                if mass:
-                    self.mass = mass
-                else:
-		    self.mass = random.randint(MIN_MASS, MAX_MASS)
-                if place:
-		    self.placePlanetRandom()
-                elif not x or not y:
-                    print('Error: Place must be true or coordinates provided')
-                else:
-                    self.placePlanetGiven()
+		if color:
+			self.color = color
+		else:
+			self.color = self.randColor()
+		if radius:
+			self.radius = radius
+		else:
+			self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
+		if mass:
+			self.mass = mass
+		else:
+			self.mass = random.randint(MIN_MASS, MAX_MASS)
+		if place:
+			self.placePlanetRandom()
+		elif not x or not y:
+			print('Error: Place must be true or coordinates provided')
+		else:
+			self.x = x
+			self.y = y
+			self.placePlanetGiven()
 
-        def placePlanetGiven(self):
+	def placePlanetGiven(self):
 	    self.rect = pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 
 	def placePlanetRandom(self):
@@ -61,7 +63,7 @@ class Planet(pygame.sprite.Sprite):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
 		if self.gs.missile:
-			if self.rect.colliderect(self.gs.missile.image.get_rect()):
+			if self.rect.colliderect(self.gs.missile.rect):
 				self.gs.missile.rect = None
                                 if self.gs.is_your_turn:
                                     self.conn_ref.transport.write('planet_collision')		

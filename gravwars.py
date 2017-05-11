@@ -6,7 +6,6 @@ import sys
 import pygame
 import math
 import pickle
-import connections
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor

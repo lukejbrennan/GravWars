@@ -7,7 +7,7 @@ class Spaceship(pygame.sprite.Sprite):
 		self.activeM = activeMover # 1 if the angle can be changed by player, 0 otherwise
 		self.activeC = activeCollider
 		self.angle = angle 
-		self.health = 10
+		self.health = 1 
 		self.expCount = 0
 		self.image = pygame.image.load("spaceship.png").convert()
 #		self.OG_image = pygame.image.load("spaceship.png").convert()
@@ -27,20 +27,20 @@ class Spaceship(pygame.sprite.Sprite):
 			self.angle = 0
 		self.image = pygame.transform.rotate(self.OG_image, self.angle)
 		self.rect = self.image.get_rect(center=(self.rect.centerx, self.rect.centery))
-		self.gs.screen.blit(self.image, self.rect)
 		
 		###########Check for Collision#######
-#		if(self.activeC):
+		if(self.activeC):
 		#rectIndex0 = self.rect.collidelist(laser.rectList)
-#			if self.rect.colliderect(missile.rect): 
-#				self.health -= 1
-#                               if self.gs.is_your_turn:
-#                                   self.conn_ref.transport.write('spaceship_collision')
-#			if self.health <= 0 and self.expCount <= 16:
-#				if self.expCount < 10:
-#					self.image = pygame.image.load("/home/scratch/paradigms/deathstar/explosion/frames00"+str(self.expCount)+"a.png")
-#					self.expCount +=1
-#				else:
-#					self.image = pygame.image.load("/home/scratch/paradigms/deathstar/explosion/frames0"+str(self.expCount)+"a.png")
-#					self.expCount +=1
+			if self.gs.missile is not None and self.rect.colliderect(self.gs.missile.rect): 
+				self.health -= 1
+				self.gs.missile = None
+			if self.health <= 0 and self.expCount <= 16:
+				if self.expCount < 10:
+					self.image = pygame.image.load("/home/scratch/paradigms/deathstar/explosion/frames00"+str(self.expCount)+"a.png")
+					self.expCount +=1
+				else:
+					self.image = pygame.image.load("/home/scratch/paradigms/deathstar/explosion/frames0"+str(self.expCount)+"a.png")
+					self.expCount +=1
+		if self.expCount <= 16:
+			self.gs.screen.blit(self.image, self.rect)
 			

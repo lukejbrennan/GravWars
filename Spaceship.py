@@ -35,6 +35,8 @@ class Spaceship(pygame.sprite.Sprite):
 		#rectIndex0 = self.rect.collidelist(laser.rectList)
 #			if self.rect.colliderect(missile.rect): 
 #				self.health -= 1
+#                               if self.gs.is_your_turn:
+#                                   self.conn_ref.transport.write('spaceship_collision')
 #			if self.health <= 0 and self.expCount <= 16:
 #				if self.expCount < 10:
 #					self.image = pygame.image.load("/home/scratch/paradigms/deathstar/explosion/frames00"+str(self.expCount)+"a.png")

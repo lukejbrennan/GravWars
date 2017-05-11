@@ -5,19 +5,19 @@ import math
 
 class Missle(pygame.sprite.Sprite):
 	def __init__(self, gs, angle, rect):
-                self.gs = gs
+		self.gs = gs
 		self.mass = 20
-                self.Vx = 100 * math.cos(angle)
-                self.Vy = 100 * math.sin(angle)
+		self.Vx = 100 * math.cos(angle)
+		self.Vy = 100 * math.sin(angle)
 		print('vx is ' + str(self.Vx) + ' and vy is ' + str(self.Vy))
-                self.angle = angle 
-		self.image = pygame.image.load("/home/brent/GravWars/missile.png").convert()
+		self.angle = angle 
+		self.image = pygame.image.load("/home/remote/lbrenna4/finalProject/GravWars/missile.png").convert()
 		self.image = pygame.transform.scale(self.image, (62, 27))
 		self.OG_image = self.image
-                print('center = ' +str(rect.centerx))
-                self.rect = self.image.get_rect(center=(rect.centerx, rect.centery))
-                self.true_x = rect.centerx
-                self.true_y = rect.centery
+		print('center = ' +str(rect.centerx))
+		self.rect = self.image.get_rect(center=(rect.centerx, rect.centery))
+		self.true_x = rect.centerx
+		self.true_y = rect.centery
 
 	def tick(self):
 	    G = 1e4
@@ -52,12 +52,12 @@ class Missle(pygame.sprite.Sprite):
             self.Vy = self.Vy + ay * dt
             self.angle = math.atan2(self.Vy, self.Vx)
     
-            # Now move the missile
-            self.true_x += dx
-            self.true_y += dy
-	    self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
-	    self.rect.centerx = self.true_x
-            self.rect.centery = self.true_y
-#	    print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
-            self.gs.screen.blit(self.image, self.rect)
+		# Now move the missile
+		self.true_x += dx
+		self.true_y += dy
+		self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
+		self.rect.centerx = self.true_x
+		self.rect.centery = self.true_y
+		#	    print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
+		self.gs.screen.blit(self.image, self.rect)
 					

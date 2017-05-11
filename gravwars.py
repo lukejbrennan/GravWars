@@ -10,7 +10,6 @@ import connections
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor
-
 PORT = 40037
 
 
@@ -19,6 +18,8 @@ class GameSpace(object):
 		MIN_PLANETS = 2
 		MAX_PLANETS = 6
 		pygame.init()
+		self.angle = 0
+		self.velocity = 100
 		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
 		num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
@@ -92,7 +93,6 @@ class GameSpace(object):
                         if self.missile:
                             self.missile.tick()
                         
-
 			pygame.display.flip()
 
 if __name__ == '__main__':

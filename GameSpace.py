@@ -15,7 +15,7 @@ from twisted.internet.task import LoopingCall
 class GameSpace(object):
 	def __init__(self):
             MIN_PLANETS = 2
-            MAX_PLANETS = 6
+            MAX_PLANETS = 4
             pygame.init()
             self.disable = False
             self.angle = 0
@@ -25,8 +25,8 @@ class GameSpace(object):
             self.num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
             self.planets = []
             self.missile = None
-            self.p1 = Spaceship.Spaceship(self, 90, .0, .5, False, False)
-            self.p2 = Spaceship.Spaceship(self, 90, .88, .5, False, False)
+            self.p1 = Spaceship.Spaceship(self, 90, .0, .5, 180, False, False)
+            self.p2 = Spaceship.Spaceship(self, 90, .88, .5, 0, False, False)
             self.black = 0,0,0
             self.is_your_turn = None
             self.conn_ref = None
@@ -140,6 +140,7 @@ class GameSpace(object):
                     if self.missile:
                             if self.missile.true_x < 0 or self.missile.true_x > self.width or self.missile.true_y < 0 or self.missile.true_y > self.height:
                                     self.missile = None
+                                    self.is_your_turn = not self.is_your_turn
                                             
                     pygame.display.flip()
                 except Exception as e:

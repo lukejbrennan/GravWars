@@ -7,8 +7,8 @@ class Missle(pygame.sprite.Sprite):
 	def __init__(self, gs, angle, x, y, sendData):
 		self.gs = gs
 		self.mass = 20
-		self.Vx = 300 * math.cos(angle)
-		self.Vy = 300 * math.sin(angle)
+		self.Vx = 500 * math.cos(angle)
+		self.Vy = 500 * math.sin(angle)
 		self.angle = angle 
 		self.image = pygame.image.load("/home/brent/GravWars/missile.png").convert()
 		self.image = pygame.transform.scale(self.image, (31, 13))

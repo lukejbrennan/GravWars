@@ -2,11 +2,12 @@ import sys, pygame, math
 import Spaceship
 
 class Spaceship(pygame.sprite.Sprite):
-	def __init__(self, gs, angle, xper, yper, activeMover, activeCollider):
+	def __init__(self, gs, angle, xper, yper, inactive_angle, activeMover, activeCollider):
 		self.gs = gs
 		self.activeM = activeMover # 1 if the angle can be changed by player, 0 otherwise
 		self.activeC = activeCollider
 		self.angle = angle 
+                self.inactive_angle = inactive_angle
 		self.health = 1 
 		self.expCount = 0
 		self.image = pygame.image.load("spaceship.png").convert()
@@ -20,7 +21,7 @@ class Spaceship(pygame.sprite.Sprite):
 			(mouseX, mouseY) = pygame.mouse.get_pos()
 			self.angle = 180 - math.atan2(mouseY-self.rect.centery, mouseX-self.rect.centerx)*180/math.pi
 		else: 
-			self.angle = 0
+			self.angle = self.inactive_angle
 		self.image = pygame.transform.rotate(self.OG_image, self.angle)
 		self.rect = self.image.get_rect(center=(self.rect.centerx, self.rect.centery))
 		

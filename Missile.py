@@ -38,16 +38,16 @@ class Missle(pygame.sprite.Sprite):
                     x_components.append(math.cos(angle) * F)
                     y_components.append(math.sin(angle) * F)
 
-            # Sum components and calculate a new force vector and accelerations
+                # Sum components and calculate a new force vector and accelerations
 		Fx_tot = sum(x_components)
 		Fy_tot = sum(y_components)
-		#            print('Fx = ' + str(Fx_tot) + ' Fy = ' + str(Fy_tot))
+		#print('Fx = ' + str(Fx_tot) + ' Fy = ' + str(Fy_tot))
 		ax = float(Fx_tot) / float(self.mass)
 		ay = float(Fy_tot) / float(self.mass)
-		#            print('Ax = ' + str(ax) + ' Ay = ' + str(ay))
+		#print('Ax = ' + str(ax) + ' Ay = ' + str(ay))
 		dx = self.Vx * dt + .5 * ax * dt**2
 		dy = self.Vy * dt + .5 * ay * dt**2
-#            print('dx = ' + str(dx) + ' dy = ' + str(dy))
+                #print('dx = ' + str(dx) + ' dy = ' + str(dy))
 		self.Vx = self.Vx + ax * dt
 		self.Vy = self.Vy + ay * dt
 		self.angle = math.atan2(self.Vy, self.Vx)
@@ -58,6 +58,6 @@ class Missle(pygame.sprite.Sprite):
 		self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
 		self.rect.centerx = self.true_x
 		self.rect.centery = self.true_y
-		#	    print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
+		#print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
 		self.gs.screen.blit(self.image, self.rect)
 					

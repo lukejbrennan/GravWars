@@ -14,7 +14,6 @@ from twisted.internet.task import LoopingCall
 
 class GameSpace(object):
 	def __init__(self):
-<<<<<<< HEAD
 		MIN_PLANETS = 2
 		MAX_PLANETS = 6
 		pygame.init()
@@ -33,7 +32,8 @@ class GameSpace(object):
 		self.connection_made = False
 		self.planets_set = False 
 		self.player = 'p0'
-	def getConnRef(self, conn_ref):
+
+        def getConnRef(self, conn_ref):
 		self.conn_ref = conn_ref
 	
 	def sendPlanet(self, planet):
@@ -54,19 +54,23 @@ class GameSpace(object):
 				self.p1.activeM = True
 				self.p1.activeC = False
 				self.p2.activeC = True
+                                self.p2.activeM = False
 			elif self.player == 'p2':
 				self.p2.activeM = True
 				self.p2.activeC = False
-				self.p1.activeC = True
+                                self.p1.activeC = True
+                                self.p1.activeM = False
 		else:
 			if self.player == 'p1':
 				self.p1.activeM = False
 				self.p1.activeC = True
 				self.p2.activeC = False
+                                self.p2.activeM = False
 			elif self.player == 'p2':
 				self.p2.activeM = False
 				self.p2.activeC = True
 				self.p1.activeC = False
+                                self.p1.activeM = False
 
 	def fireMissile(self):
 		(mouseX, mouseY) = pygame.mouse.get_pos()
@@ -86,12 +90,12 @@ class GameSpace(object):
 	# Call when connection is made 
 	def setPlanets(self):
 		if self.player == 'p1':
-			self.is_your_turn = True
-			for planet in range(self.num_planets):
-				self.planets.append(Planet.Planet(self, True))
-				self.sendPlanet(self.planets[planet])
+		    for planet in range(self.num_planets):
+			self.planets.append(Planet.Planet(self, True))
+			self.sendPlanet(self.planets[planet])
 		elif self.player == 'p2':
-			self.is_your_turn = False
+			#self.is_your_turn = False
+                        return
 		else:
 			print('Error: unknown self.player name')
 		print("planets have been set")
@@ -108,54 +112,58 @@ class GameSpace(object):
 		#self.clock = pygame.time.Clock()
 		#self.clock.tick(60) # 60x per second
 		#Handle events
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit(0)
-			if event.type == pygame.MOUSEBUTTONUP:
-				print "mouse hit!"
-				if not self.is_your_turn:
-					self.fireMissile()
-#					(mouseX, mouseY) = pygame.mouse.get_pos()
-#					ship_x = None
-#					ship_y = None
-#					if self.player == 'p1':
-#						ship_x = self.p1.rect.centerx
-#						ship_y = self.p1.rect.centery
-#						angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
-#						self.missile = Missile.Missle(self, angle, self.p1.rect)
-#					elif self.player == 'p2':
-#						ship_x = self.p2.rect.centerx
-#						ship_y = self.p2.rect.centery
-#						angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
-#						self.missile = Missile.Missle(self, angle, self.p2.rect)
-		self.screen.fill(self.black)
-		self.setTurnPermissions()
-	
-		#Do all checks on whose turn it is
-		if self.is_your_turn:
-			if self.player == 'p1':
-				self.p1.activeM = True
-				self.p1.activeC = False
-				self.p2.activeM = False
-				self.p2.activeC = True
-			elif self.player == 'p2':
-				self.p2.activeM = True
-				self.p2.activeC = False
-				self.p1.activeM = False
-				self.p1.activeC = True
+                try:
+                    for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                    reactor.stop()
+                                    sys.exit(0)
+                            if event.type == pygame.MOUSEBUTTONUP:
+                                    print "mouse hit!"
+                                    if not self.is_your_turn:
+                                            #self.fireMissile()
+                                            (mouseX, mouseY) = pygame.mouse.get_pos()
+                                            ship_x = None
+                                            ship_y = None
+                                            if self.player == 'p1':
+                                                    ship_x = self.p1.rect.centerx
+                                                    ship_y = self.p1.rect.centery
+                                                    angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
+                                                    self.missile = Missile.Missle(self, angle, self.p1.rect)
+                                            elif self.player == 'p2':
+                                                    ship_x = self.p2.rect.centerx
+                                                    ship_y = self.p2.rect.centery
+                                                    angle = math.atan2(mouseY-ship_y, mouseX - ship_x)
+                                                    self.missile = Missile.Missle(self, angle, self.p2.rect)
+                    self.screen.fill(self.black)
+                    self.setTurnPermissions()
+            
+                    #Do all checks on whose turn it is
+                    if self.is_your_turn:
+                            if self.player == 'p1':
+                                    self.p1.activeM = True
+                                    self.p1.activeC = False
+                                    self.p2.activeM = False
+                                    self.p2.activeC = True
+                            elif self.player == 'p2':
+                                    self.p2.activeM = True
+                                    self.p2.activeC = False
+                                    self.p1.activeM = False
+                                    self.p1.activeC = True
 
-		#Do ticks for all sprite objects
-		for planet in self.planets:	
-			planet.tick()
+                    #Do ticks for all sprite objects
+                    for planet in self.planets:	
+                            planet.tick()
 
-		self.p1.tick()
-		self.p2.tick()
+                    self.p1.tick()
+                    self.p2.tick()
 
-		if self.missile:
-			self.missile.tick()
-		#Check if missile has gone off the page
-		if self.missile:
-			if self.missile.true_x < 0 or self.missile.true_x > self.width or self.missile.true_y < 0 or self.missile.true_y > self.height:
-				self.missile = None
-					
-		pygame.display.flip()
+                    if self.missile:
+                            self.missile.tick()
+                    #Check if missile has gone off the page
+                    if self.missile:
+                            if self.missile.true_x < 0 or self.missile.true_x > self.width or self.missile.true_y < 0 or self.missile.true_y > self.height:
+                                    self.missile = None
+                                            
+                    pygame.display.flip()
+                except Exception as e:
+                    print e

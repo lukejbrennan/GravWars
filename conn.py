@@ -12,7 +12,7 @@ import Planet
 class p2Connection(Protocol):
     def __init__(self, gs):
         self.gs = gs
-        self.gs.getRef(self)
+        self.gs.getConnRef(self)
     
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
@@ -29,8 +29,9 @@ class p2Connection(Protocol):
 		else:
 			print 'Receiving planets'
 			data = data.split('\n')
-			print data
 			while data[0] != '':
+                                print data
+                                print data[0].strip()
 				if data[0].strip() == 'new_planet':
 					color = data[1].strip()
 					color = color.split('_')
@@ -39,13 +40,8 @@ class p2Connection(Protocol):
 					mass = int(data[3].strip())
 					x = int(data[4].strip())
 					y = int(data[5].strip())
-					data = data[5:]
-					
-					####
+					data = data[6:]
 					self.gs.planets.append(Planet.Planet(self.gs, False, color=color, radius=radius, mass=mass, x=x, y=y))
-			else:
-				print('Error: Unknown data')
-
 
 class p2ConnectionFactory(ClientFactory):
     def __init__(self, gs):
@@ -62,7 +58,7 @@ class p2ConnectionFactory(ClientFactory):
 class p1Connection(Protocol):
     def __init__(self, gs):
             self.gs = gs
-            self.gs.getRef(self)
+            self.gs.getConnRef(self)
 
     def connectionMade(self):
 		print 'Successful contact for command connection from work.py'

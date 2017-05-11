@@ -17,15 +17,9 @@ if __name__ == "__main__":
     if sys.argv[1] == '-p1':
 		print 'listening for a command connection on port 40011'
 		reactor.listenTCP(PORT, conn.p1ConnectionFactory(gs))
-		#print("After listen")
-		#reactor.run()
-		#print("after reactor")
 		gs.main('p1')
     elif sys.argv[1] == '-p2':
-		reactor.connectTCP("ash.campus.nd.edu", PORT, conn.p2ConnectionFactory(gs))
-		#print("After connect")
-		#reactor.run()
-		#print("after reactor")
+		reactor.connectTCP("localhost", PORT, conn.p2ConnectionFactory(gs))
 		gs.main('p2')
     else:
 		print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')

@@ -61,7 +61,7 @@ class Planet(pygame.sprite.Sprite):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
 		if self.gs.missile:
-			if self.rect.colliderect(self.gs.missile.image.get_rect()):
+			if self.rect.colliderect(self.gs.missile.rect):
 				self.gs.missile.rect = None
                                 if self.gs.is_your_turn:
                                     self.conn_ref.transport.write('planet_collision')		

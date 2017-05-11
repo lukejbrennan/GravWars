@@ -11,20 +11,21 @@ import time
 
 class p2Connection(Protocol):
     def __init__(self, gs):
-            self.gs = gs
-
+        self.gs = gs
+        self.gs.getRef(self)
+    
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
-        self.gs.getConnRef(self)
         self.gs.main('p2')
 
 
     def dataReceived(self, data):
+        print 'hey, getting data'
         if data == 'spaceship_collision':
             #end game
             return
         elif data == 'planet_collision':
-            self.gs.is_your_turn = not self.gs.is_you_turn
+            self.gs.is_your_turn = not self.gs.is_your_turn
         else:
             data = data.split('\n')
             if data[0].strip() == 'new_planet':
@@ -44,7 +45,7 @@ class p2Connection(Protocol):
 
 class p2ConnectionFactory(ClientFactory):
     def __init__(self, gs):
-        self.myconn = p1Connection(gs)
+        self.myconn = p2Connection(gs)
 
     def buildProtocol(self, addr):
         return self.myconn
@@ -59,14 +60,15 @@ class p2ConnectionFactory(ClientFactory):
 class p1Connection(Protocol):
     def __init__(self, gs):
             self.gs = gs
+            self.gs.getRef(self)
 
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
-        self.gs.getConnRef(self)
+        self.transport.write('hello')
         self.gs.main('p1')
 
-
     def dataReceived(self, data):
+        print data
         if data == 'spaceship_collision':
             #end game
             return

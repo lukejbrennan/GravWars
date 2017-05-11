@@ -64,9 +64,9 @@ class Planet(pygame.sprite.Sprite):
 		#Check for a missle collision with planet
 		if self.gs.missile:
 			if self.rect.colliderect(self.gs.missile.rect):
-				self.gs.missile.rect = None
+				self.gs.missile = None
                                 if self.gs.is_your_turn:
-                                    self.conn_ref.transport.write('planet_collision')		
+                                    self.gs.conn_ref.transport.write('planet_collision')		
 
 	def randColor(self):
 		rgb = []

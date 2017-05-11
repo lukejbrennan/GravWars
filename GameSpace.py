@@ -5,7 +5,7 @@ import Spaceship
 import sys
 import pygame
 import math
-import connections
+import conn
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor
@@ -33,7 +33,15 @@ class GameSpace(object):
             self.conn_ref = conn_ref
         
         def sendPlanet(self, planet):
-            
+            data = 'new_planet\n'
+            data = data + str(planet.color[0]) + '_'
+            data = data + str(planet.color[1]) + '_'
+            data = data + str(planet.color[2]) + '\n'
+            data = data + str(planet.radius) + '\n'
+            data = data + str(planet.mass) + '\n'
+            data = data + str(planet.x) + '\n'
+            data = data + str(planet.y)
+            self.conn_ref.transport.write(data)
 
 	def main(self, player):
 		self.clock = pygame.time.Clock()
@@ -53,7 +61,7 @@ class GameSpace(object):
 			#Handle events
 			for event in pygame.event.get():
 			        if event.type == pygame.QUIT:
-				    sys.exit()
+				    sys.exit(0)
                                 if event.type == pygame.MOUSEBUTTONUP:
                                     if not self.is_your_turn:
                                         (mouseX, mouseY) = pygame.mouse.get_pos()
@@ -74,15 +82,15 @@ class GameSpace(object):
                         #Do all checks on whose turn it is
                         if self.is_your_turn:
                             if player == 'p1':
-                                p1.activeM = True
-                                p1.activeC = False
-                                p2.activeM = False
-                                p2.activeC = True
+                                self.p1.activeM = True
+                                self.p1.activeC = False
+                                self.p2.activeM = False
+                                self.p2.activeC = True
                             elif player == 'p2':
-                                p2.activeM = True
-                                p2.activeC = False
-                                p1.activeM = False
-                                p1.activeC = True
+                                self.p2.activeM = True
+                                self.p2.activeC = False
+                                self.p1.activeM = False
+                                self.p1.activeC = True
 
 			#Do ticks for all sprite objects
 			for planet in self.planets:	

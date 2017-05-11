@@ -21,7 +21,7 @@ class GameSpace(object):
 		self.velocity = 100
 		self.size = self.width, self.height = 840, 620
 		self.screen = pygame.display.set_mode(self.size)
-		num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
+		self.num_planets = random.randint(MIN_PLANETS, MAX_PLANETS)
 		self.planets = []
 		self.missile = None
 		self.p1 = Spaceship.Spaceship(self, 90, .0, .5, True, True)
@@ -30,16 +30,16 @@ class GameSpace(object):
                 self.is_your_turn = None
                 self.conn_ref = None
         
-        def getConnRef(conn_ref):
+        def getConnRef(self, conn_ref):
             self.conn_ref = conn_ref
 
 	def main(self, player):
 		self.clock = pygame.time.Clock()
                 if player == 'p1':
                     self.is_your_turn = True
-        	    for planet in range(num_planets):
+        	    for planet in range(self.num_planets):
 			self.planets.append(Planet.Planet(self, True))
-                        self.conn_ref.transport.write('planet\n' + pickle.dumps(planets[planet]))
+                        self.conn_ref.transport.write('planet\n' + pickle.dumps(self.planets[planet]))
 
                 elif player == 'p2':
                     self.is_your_turn = False

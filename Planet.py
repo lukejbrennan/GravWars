@@ -43,8 +43,10 @@ class Planet(pygame.sprite.Sprite):
 		pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
 		#Check for a missle collision with planet
 		if self.gs.missile:
-			if self.rect.colliderect(self.gs.missile.image.get_rect()):
-				self.gs.missile.rect = None
+#			if self.rect.colliderect(self.gs.missile.image.get_rect()):
+#				self.gs.missile.rect = None
+			if self.rect.colliderect(self.gs.missile.rect):			
+				self.gs.missile = None
 			
 
 	def randColor(self):

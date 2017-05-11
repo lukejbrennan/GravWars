@@ -7,8 +7,8 @@ class Missle(pygame.sprite.Sprite):
 	def __init__(self, gs, angle, rect):
 		self.gs = gs
 		self.mass = 20
-		self.Vx = 100 * math.cos(angle)
-		self.Vy = 100 * math.sin(angle)
+		self.Vx = 300 * math.cos(angle)
+		self.Vy = 300 * math.sin(angle)
 		print('vx is ' + str(self.Vx) + ' and vy is ' + str(self.Vy))
 		self.angle = angle 
 		self.image = pygame.image.load("/home/remote/lbrenna4/finalProject/GravWars/missile.png").convert()
@@ -20,13 +20,13 @@ class Missle(pygame.sprite.Sprite):
 		self.true_y = rect.centery
 
 	def tick(self):
-	    G = 1e4
-	    dt = float(1)/float(60)
-            x_components = []
-            y_components = []
-            curr_x = self.rect.centerx
-            curr_y = self.rect.centery
-            for planet in self.gs.planets:
+	   	G = 0 #1e4
+	  	dt = float(1)/float(60)
+		x_components = []
+		y_components = []
+		curr_x = self.rect.centerx
+		curr_y = self.rect.centery
+		for planet in self.gs.planets:
                     #Force on missile from planet
                     planet_x = planet.rect.centerx
                     planet_y = planet.rect.centery
@@ -39,19 +39,19 @@ class Missle(pygame.sprite.Sprite):
                     y_components.append(math.sin(angle) * F)
 
             # Sum components and calculate a new force vector and accelerations
-            Fx_tot = sum(x_components)
-            Fy_tot = sum(y_components)
-#            print('Fx = ' + str(Fx_tot) + ' Fy = ' + str(Fy_tot))
-            ax = float(Fx_tot) / float(self.mass)
-            ay = float(Fy_tot) / float(self.mass)
-#            print('Ax = ' + str(ax) + ' Ay = ' + str(ay))
-            dx = self.Vx * dt + .5 * ax * dt**2
-            dy = self.Vy * dt + .5 * ay * dt**2
+		Fx_tot = sum(x_components)
+		Fy_tot = sum(y_components)
+		#            print('Fx = ' + str(Fx_tot) + ' Fy = ' + str(Fy_tot))
+		ax = float(Fx_tot) / float(self.mass)
+		ay = float(Fy_tot) / float(self.mass)
+		#            print('Ax = ' + str(ax) + ' Ay = ' + str(ay))
+		dx = self.Vx * dt + .5 * ax * dt**2
+		dy = self.Vy * dt + .5 * ay * dt**2
 #            print('dx = ' + str(dx) + ' dy = ' + str(dy))
-            self.Vx = self.Vx + ax * dt
-            self.Vy = self.Vy + ay * dt
-            self.angle = math.atan2(self.Vy, self.Vx)
-    
+		self.Vx = self.Vx + ax * dt
+		self.Vy = self.Vy + ay * dt
+		self.angle = math.atan2(self.Vy, self.Vx)
+
 		# Now move the missile
 		self.true_x += dx
 		self.true_y += dy

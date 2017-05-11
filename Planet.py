@@ -16,13 +16,23 @@ class Planet(pygame.sprite.Sprite):
 		    self.color = self.randColor()
                 if radius:
                     self.radius = radius
-
-                self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
-		self.mass = random.randint(MIN_MASS, MAX_MASS)
+                else:
+                    self.radius = random.randint(MIN_RADIUS, MAX_RADIUS)
+                if mass:
+                    self.mass = mass
+                else:
+		    self.mass = random.randint(MIN_MASS, MAX_MASS)
                 if place:
-		    self.placePlanet()		
+		    self.placePlanetRandom()
+                elif not x or not y:
+                    print('Error: Place must be true or coordinates provided')
+                else:
+                    self.placePlanetGiven()
 
-	def placePlanet(self):
+        def placePlanetGiven(self):
+	    self.rect = pygame.draw.circle(self.gs.screen, self.color, (self.x, self.y), self.radius)
+
+	def placePlanetRandom(self):
 		MIN_X = int(self.gs.width * .23)
 		MAX_X = int(self.gs.width * .78)
 		MIN_Y = int(self.gs.height * .18)

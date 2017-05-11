@@ -15,7 +15,7 @@ class p2Connection(Protocol):
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
         self.gs.getConnRef(self)
-        self.gs.main('p1')
+        self.gs.main('p2')
 
     def dataReceived(self, data):
         if data == 'spaceship_collision':
@@ -24,7 +24,19 @@ class p2Connection(Protocol):
         elif data == 'planet_collision':
             self.gs.is_your_turn = not self.gs.is_you_turn
         else:
-            print('Error: Unknown data')
+            data = data.split('\n')
+            if data[0].strip() == 'new_planet':
+                color = data[1].strip()
+                color = color.split('_')
+                color = [int(c) for c in color]
+                radius = int(data[2].strip())
+                mass = int(data[3].strip())
+                x = int(data[4].strip())
+                y = int(data[5].strip())
+                self.gs.planets.append(Planet.Planet(self.gs, False, color=color, radius=radius, mass=mass, x=x, y=y))
+            else:
+                print('Error: Unknown data')
+
 
 
 

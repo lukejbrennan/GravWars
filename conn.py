@@ -15,8 +15,8 @@ class p2Connection(Protocol):
 
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
-        #gs.getConnRef(self)
-        #gs.main('p1')
+        self.gs.getConnRef(self)
+        self.gs.main('p1')
 
 
     def dataReceived(self, data):
@@ -50,8 +50,8 @@ class p1Connection(Protocol):
 
     def connectionMade(self):
         print 'Successful contact for command connection from work.py'
-        #gs.getConnRef(self)
-        #gs.main('p1')
+        self.gs.getConnRef(self)
+        self.gs.main('p1')
 
 
     def dataReceived(self, data):

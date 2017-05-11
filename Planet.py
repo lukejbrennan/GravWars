@@ -47,7 +47,7 @@ class Planet(pygame.sprite.Sprite):
 		if self.gs.missile:
 			if self.rect.colliderect(self.gs.missile.image.get_rect()):
 				self.gs.missile.rect = None
-                                if self.planet.is_your_turn:
+                                if self.gs.is_your_turn:
                                     self.conn_ref.transport.write('planet_collision')
 			
 

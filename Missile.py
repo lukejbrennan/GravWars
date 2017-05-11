@@ -51,13 +51,13 @@ class Missle(pygame.sprite.Sprite):
             self.Vx = self.Vx + ax * dt
             self.Vy = self.Vy + ay * dt
             self.angle = math.atan2(self.Vy, self.Vx)
-    
-		# Now move the missile
-		self.true_x += dx
-		self.true_y += dy
-		self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
-		self.rect.centerx = self.true_x
-		self.rect.centery = self.true_y
-		#	    print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
-		self.gs.screen.blit(self.image, self.rect)
+
+            # Now move the missile
+            self.true_x += dx
+            self.true_y += dy
+            self.image = pygame.transform.rotate(self.OG_image, -1 * self.angle * 180 / math.pi)
+            self.rect.centerx = self.true_x
+            self.rect.centery = self.true_y
+            #	    print('x = ' + str(self.rect.centerx) + ' y = ' + str(self.rect.centery))
+            self.gs.screen.blit(self.image, self.rect)
 					

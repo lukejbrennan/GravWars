@@ -10,7 +10,6 @@ import connections
 from twisted.internet.protocol import Factory
 from twisted.internet.protocol import Protocol
 from twisted.internet import reactor
-PORT = 40037
 
 
 class GameSpace(object):
@@ -96,16 +95,18 @@ class GameSpace(object):
 			pygame.display.flip()
 
 if __name__ == '__main__':
-        if len(sys.argv) != 2:
+    PORT = 40037
+    if len(sys.argv) != 2:
             print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
             exit(0)        
-	gs = GameSpace()
-        if sys.argv[1] == '-p1':
-            reactor.listenTCP(PORT, connections.p1Factory(gs))
-        elif sys.argv[1] == '-p2':
-            reactor.connectTCP('127.0.0.1', PORT, connections.p2Factory(gs))
-        else:
-            print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
-            exit(0)
+    gs = GameSpace()
+    if sys.argv[1] == '-p1':
+        reactor.listenTCP(PORT, connections.p1Factory(gs))
         reactor.run()
+    elif sys.argv[1] == '-p2':
+        reactor.connectTCP("ash.campus.nd.edu", PORT, connections.p2Factory(gs))
+        reactor.run()
+    else:
+        print('Usage: python ' + sys.argv[0] + ' -p1 | -p2')
+        exit(0)
 

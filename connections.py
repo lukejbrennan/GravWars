@@ -43,6 +43,7 @@ class P2Connection(Protocol):
         self.gs = gs
 
     def connnectionMade(self):
+        print('conn_made')
         gs.getConnRef(self)
         gs.main('p2')
 
